@@ -6,7 +6,12 @@
 * This app will run in the browser
 * Features dynamically updated HTML and CSS powered by JavaScript
 * Have a clean, polished, and responsive user interface
-
+* Start button that begins a timer and the test
+* After each question is answered a new question is displayed
+* Incorrect answers remove from the time remaining
+* When the timer gets to 0 or all questions are answered the quiz ends
+* At the end of the quiz prompt the user for initials to save the highscore
+* Highscore list must be persitant
 
 ## Files & directories
 
