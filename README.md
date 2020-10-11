@@ -31,7 +31,7 @@
 ### Pages
 
 #### index.html
-![index.html]()
+![index.html](Assets/codeQuiz.png)
 
 - - -
 

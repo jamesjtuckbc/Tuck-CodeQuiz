@@ -237,6 +237,8 @@ function newQuestion() {
         answerBtn3.setAttribute("class", "btn btn-primary answerBtn");
         answerBtn4.setAttribute("class", "btn btn-primary answerBtn");
         newBtn.style.display = "none";
+        
+
         newDiv.textContent = questions[questionNumber].question;
 
         answerBtn1.textContent = questions[questionNumber].answer1;
