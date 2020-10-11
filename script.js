@@ -25,7 +25,7 @@ var highScoreInputEl = document.createElement("input");
 var highscoreBool = false;
 var newScore = 0;
 var questionNumber = 0;
-var time = 60;
+var time = 120;
 var timerCountDown;
 
 // html object
@@ -133,21 +133,21 @@ answer1DivRow.setAttribute("class", "row");
 answer2DivRow.setAttribute("class", "row");
 answer3DivRow.setAttribute("class", "row");
 answer4DivRow.setAttribute("class", "row");
-answer1DivCol.setAttribute("class", "col-12");
-answer2DivCol.setAttribute("class", "col-12");
-answer3DivCol.setAttribute("class", "col-12");
-answer4DivCol.setAttribute("class", "col-12");
+answer1DivCol.setAttribute("class", "col-12 mt-4");
+answer2DivCol.setAttribute("class", "col-12 mt-4");
+answer3DivCol.setAttribute("class", "col-12 mt-4");
+answer4DivCol.setAttribute("class", "col-12 mt-4");
 btnDiv.setAttribute("class","row justify-content-md-center");
-answerBtn1.setAttribute("class", "answerBtn");
-answerBtn2.setAttribute("class", "answerBtn");
-answerBtn3.setAttribute("class", "answerBtn");
-answerBtn4.setAttribute("class", "answerBtn");
+answerBtn1.setAttribute("class", "btn btn-primary answerBtn");
+answerBtn2.setAttribute("class", "btn btn-primary answerBtn");
+answerBtn3.setAttribute("class", "btn btn-primary answerBtn");
+answerBtn4.setAttribute("class", "btn btn-primary answerBtn");
 // function to create first page
 function initialize() {
     clearInterval(timerCountDown);
     timerEl.style.display = "block";
     newBtn.style.display = "block";
-    time = 60;
+    time = 120;
     newScore = 0;
     mainContentEl.setAttribute("class", "centered container");
     newDiv.textContent = "";
@@ -232,6 +232,10 @@ function removeAllChildNodes(parent) {
 // function to create question and answer buttons
 function newQuestion() {
     if (questionNumber < questions.length) {
+        answerBtn1.setAttribute("class", "btn btn-primary answerBtn");
+        answerBtn2.setAttribute("class", "btn btn-primary answerBtn");
+        answerBtn3.setAttribute("class", "btn btn-primary answerBtn");
+        answerBtn4.setAttribute("class", "btn btn-primary answerBtn");
         newBtn.style.display = "none";
         newDiv.textContent = questions[questionNumber].question;
 
@@ -296,7 +300,7 @@ function newHighScore() {
         if (existingEntries == null) existingEntries = [];
         var user = {
             initials: highScoreInputEl.value,
-            score: newScore,
+            score: (newScore + (time * .5)),
             timeRemaining: time
         };
 
@@ -316,7 +320,8 @@ function newHighScore() {
 // timer function
 function timer() {
     timerCountDown = setInterval(function () {
-        if (time === 1) {
+        if (time <= 0) {
+            newHighScore()
             clearInterval(timerCountDown);
         }
         time--;
@@ -328,55 +333,63 @@ highScoreEl.addEventListener("click", switchPage);
 
 answerBtn1.addEventListener("click", function () {
     if (questions[questionNumber].correctAnswer === "answer1") {
+        // correct answer
         newScore += 5
         questionNumber++
-        console.log("Correct");
-        newQuestion();
+        answerBtn1.setAttribute("class", "btn btn-success answerBtn");
+        setTimeout(newQuestion, 500);
     } else {
+        // wrong answer
         time -= 5;
         questionNumber++
-        console.log("wrong");
-        newQuestion();
+        answerBtn1.setAttribute("class", "btn btn-danger answerBtn");
+        setTimeout(newQuestion, 500);
     }
 
 });
 answerBtn2.addEventListener("click", function () {
     if (questions[questionNumber].correctAnswer === "answer2") {
+        // correct answer
         newScore += 5
         questionNumber++
-        console.log("Correct");
-        newQuestion();
+        answerBtn2.setAttribute("class", "btn btn-success answerBtn");
+        setTimeout(newQuestion, 500);
     } else {
+        // wrong answer
         time -= 5;
         questionNumber++
-        console.log("wrong");
-        newQuestion();
+        answerBtn2.setAttribute("class", "btn btn-danger answerBtn");
+        setTimeout(newQuestion, 500);
     }
 });
 answerBtn3.addEventListener("click", function () {
     if (questions[questionNumber].correctAnswer === "answer3") {
+        // correct answer
         newScore += 5
         questionNumber++
-        console.log("Correct");
-        newQuestion();
+        answerBtn3.setAttribute("class", "btn btn-success answerBtn");
+        setTimeout(newQuestion, 500);
     } else {
+        // wrong answer
         time -= 5;
         questionNumber++
-        console.log("wrong");
-        newQuestion();
+        answerBtn3.setAttribute("class", "btn btn-danger answerBtn");
+        setTimeout(newQuestion, 500);
     }
 });
 answerBtn4.addEventListener("click", function () {
     if (questions[questionNumber].correctAnswer === "answer4") {
+        // correct answer
         newScore += 5
         questionNumber++
-        console.log("Correct");
-        newQuestion();
+        answerBtn4.setAttribute("class", "btn btn-success answerBtn");
+        setTimeout(newQuestion, 500);
     } else {
+        // wrong answer
         time -= 5;
         questionNumber++
-        console.log("wrong");
-        newQuestion();
+        answerBtn4.setAttribute("class", "btn btn-danger answerBtn");
+        setTimeout(newQuestion, 500);
     }
 });
 // call first function
