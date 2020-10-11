@@ -25,7 +25,7 @@ var highScoreInputEl = document.createElement("input");
 var highscoreBool = false;
 var newScore = 0;
 var questionNumber = 0;
-var time = 120;
+var time = 75;
 var timerCountDown;
 
 // questions and answers array
@@ -140,9 +140,9 @@ answerBtn4.setAttribute("class", "btn btn-primary answerBtn");
 // function to create first page
 function initialize() {
     clearInterval(timerCountDown);
-    timerEl.style.display = "block";
+    timerEl.style.display = "inline";
     newBtn.style.display = "block";
-    time = 120;
+    time = 75;
     newScore = 0;
     mainContentEl.setAttribute("class", "centered container");
     newDiv.textContent = "";
@@ -268,6 +268,7 @@ function newQuestion() {
 function newHighScore() {
     // clear DOM
     removeAllChildNodes(mainContentEl);
+    clearInterval(timerCountDown);
     // show hidden button and update DOM elements
     newBtn.style.display = "inline";
     mainContentEl.setAttribute("class", "centered container");
@@ -314,7 +315,7 @@ function newHighScore() {
 
         // update Bool, clear timer, and go to highscore page
         highscoreBool = true;
-        clearInterval(timerCountDown);
+        
         highScore();
 
     });
@@ -323,7 +324,7 @@ function newHighScore() {
 // timer function
 function timer() {
     timerCountDown = setInterval(function () {
-        if (time <= 0) {
+        if (time <= 1) {
             newHighScore()
             clearInterval(timerCountDown);
         }
