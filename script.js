@@ -28,14 +28,7 @@ var questionNumber = 0;
 var time = 120;
 var timerCountDown;
 
-// html object
-var htmlObj = {
-    mainPage: {
-
-    }
-};
-// arrays
-// questions array
+// questions and answers array
 var questions = [
     {
         question: "Which of the following is an advantage of using JavaScript?",
@@ -121,7 +114,7 @@ var questions = [
 
 
 
-// FUNCTIONS
+// DOM Element setup
 
 mainContentEl.appendChild(newDiv);
 newDiv.setAttribute("class", "centered container justify-content-md-center");
@@ -137,11 +130,13 @@ answer1DivCol.setAttribute("class", "col-12 mt-4");
 answer2DivCol.setAttribute("class", "col-12 mt-4");
 answer3DivCol.setAttribute("class", "col-12 mt-4");
 answer4DivCol.setAttribute("class", "col-12 mt-4");
-btnDiv.setAttribute("class","row justify-content-md-center");
+btnDiv.setAttribute("class", "row justify-content-md-center");
 answerBtn1.setAttribute("class", "btn btn-primary answerBtn");
 answerBtn2.setAttribute("class", "btn btn-primary answerBtn");
 answerBtn3.setAttribute("class", "btn btn-primary answerBtn");
 answerBtn4.setAttribute("class", "btn btn-primary answerBtn");
+
+// FUNCTIONS
 // function to create first page
 function initialize() {
     clearInterval(timerCountDown);
@@ -189,7 +184,6 @@ function highScore() {
 
     // newP.setAttribute("class", "centered lead");
     var highScoreUser = JSON.parse(localStorage.getItem("allEntries"));
-    console.log(highScoreUser);
     if (highScoreUser == null) {
 
     } else {
@@ -232,33 +226,38 @@ function removeAllChildNodes(parent) {
 // function to create question and answer buttons
 function newQuestion() {
     if (questionNumber < questions.length) {
+        // set buttons to blue
         answerBtn1.setAttribute("class", "btn btn-primary answerBtn");
         answerBtn2.setAttribute("class", "btn btn-primary answerBtn");
         answerBtn3.setAttribute("class", "btn btn-primary answerBtn");
         answerBtn4.setAttribute("class", "btn btn-primary answerBtn");
+        // hide button from previous "page"
         newBtn.style.display = "none";
-        
 
+        // set question text
         newDiv.textContent = questions[questionNumber].question;
-
+        // set answer texts for buttons
         answerBtn1.textContent = questions[questionNumber].answer1;
         answerBtn2.textContent = questions[questionNumber].answer2;
         answerBtn3.textContent = questions[questionNumber].answer3;
         answerBtn4.textContent = questions[questionNumber].answer4;
-
+        // add rows for page layout
         newDiv.append(answer1DivRow);
         newDiv.append(answer2DivRow);
         newDiv.append(answer3DivRow);
         newDiv.append(answer4DivRow);
+        // add columns for page layout
         answer1DivRow.append(answer1DivCol);
         answer2DivRow.append(answer2DivCol);
         answer3DivRow.append(answer3DivCol);
         answer4DivRow.append(answer4DivCol);
+        // add buttons to divs
         answer1DivCol.append(answerBtn1);
         answer2DivCol.append(answerBtn2);
         answer3DivCol.append(answerBtn3);
         answer4DivCol.append(answerBtn4);
     } else {
+        // end of questions - stop timer and update DOM
         clearInterval(timerCountDown);
         newHighScore();
     };
@@ -267,7 +266,9 @@ function newQuestion() {
 
 // function to record highscore
 function newHighScore() {
+    // clear DOM
     removeAllChildNodes(mainContentEl);
+    // show hidden button and update DOM elements
     newBtn.style.display = "inline";
     mainContentEl.setAttribute("class", "centered container");
     newDiv.textContent = "";
@@ -293,13 +294,14 @@ function newHighScore() {
 
     newBtn.textContent = "Submit";
     newDiv.append(newBtn);
-
+    // click event to add new highscore
     newBtn.addEventListener("click", function (event) {
         event.preventDefault();
-        console.log(highScoreLabelEl.value);
-
+        // pull allEntries back from local storage
         var existingEntries = JSON.parse(localStorage.getItem("allEntries"));
+        // check if null or undefined
         if (existingEntries == null) existingEntries = [];
+        // update user object
         var user = {
             initials: highScoreInputEl.value,
             score: (newScore + (time * .5)),
@@ -310,8 +312,7 @@ function newHighScore() {
         existingEntries.push(user);
         localStorage.setItem("allEntries", JSON.stringify(existingEntries));
 
-
-        console.log(user);
+        // update Bool, clear timer, and go to highscore page
         highscoreBool = true;
         clearInterval(timerCountDown);
         highScore();
